@@ -10,8 +10,6 @@ import {
   Easing
 } from 'react-native'
 import IconIonicon from 'react-native-vector-icons/Ionicons'
-import Entypo from 'react-native-vector-icons/Entypo'
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import Slider from 'react-native-slider'
 import LottieView from 'lottie-react-native'
 import LinearGradient from 'react-native-linear-gradient'
@@ -21,7 +19,6 @@ import Text from './Text'
 import {Metrics, Icons, Colors} from 'src/theme'
 import {moderateScale} from 'src/utils/scaling'
 import autobind from 'autobind-decorator'
-import Feather from 'react-native-vector-icons/Feather'
 
 const PADDING = 15
 const LOTTIE_LOOPS = 8
@@ -30,64 +27,64 @@ const LOTTIE_STEP = 1 / LOTTIE_LOOPS
 
 const styles = StyleSheet.create({
   bgImageContainer: {
-    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     height: Metrics.screenWidth + moderateScale(2 * PADDING)
   },
   bgImage: {
-    width: '100%',
-    height: Metrics.screenWidth - moderateScale(2 * PADDING),
-    justifyContent: 'space-between',
-    marginTop: moderateScale(PADDING)
+    width: Metrics.screenWidth,
+    height: Metrics.screenWidth,
+    justifyContent: 'space-between'
+  },
+  bgImageStyle: {
   },
   cardTop: {
     flexDirection: 'row',
-    width: '100%',
+    width: Metrics.screenWidth,
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: moderateScale(PADDING),
     height: moderateScale(40 + 2 * PADDING)
   },
   avatarContainer: {
+    width: moderateScale(40 + 2 * PADDING),
     alignItems: 'center'
   },
   avatar: {
     width: moderateScale(40),
     height: moderateScale(40),
-    borderRadius: moderateScale(20),
+    borderRadius: moderateScale(40),
     borderWidth: 1,
     borderColor: '#fff'
   },
   textTopContainer: {
-    flex: 1,
-    paddingLeft: moderateScale(PADDING / 2)
+    flex: 1
   },
   onlyTextTopContainer: {
     marginLeft: moderateScale(PADDING),
     flex: 1
   },
   actionButton: {
-    paddingLeft: moderateScale(PADDING),
+    width: moderateScale(40),
     height: moderateScale(40),
     alignItems: 'center',
     justifyContent: 'center'
   },
+  cardBottom: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: moderateScale(60)
+  },
   cardBottomInner: {
+    width: Metrics.screenWidth - moderateScale(2 * PADDING),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    height: moderateScale(60),
-    backgroundColor: 'rgba(0,0,0,0.3)',
-    paddingHorizontal: moderateScale(PADDING)
-  },
-    flexDirection: 'row',
-    height: '100%',
     alignItems: 'center'
   },
   comments: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-around',
+    width: moderateScale(60)
   },
   send: {
     flexDirection: 'row',
@@ -96,8 +93,7 @@ const styles = StyleSheet.create({
     width: moderateScale(30)
   },
   slider: {
-    marginHorizontal: 10,
-    flex: 1,
+    width: Metrics.screenWidth / 2,
     height: moderateScale(60),
     justifyContent: 'center'
   },
@@ -128,13 +124,6 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
     tintColor: Colors.white
-  },
-  countText: {
-    fontSize: 12,
-    paddingBottom: moderateScale(5)
-  },
-  leftSpace: {
-    marginLeft: moderateScale(10)
   }
 })
 
@@ -163,16 +152,18 @@ class HomeCard extends PureComponent {
     }]
 
     return (
-      <TouchableWithoutFeedback style={styles.bgImageContainer} onPress={this.onPressCard}>
+      <TouchableWithoutFeedback onPress={this.props.onPressCard}>
+        <View style={styles.bgImageContainer}>
           <ImageBackground
             source={{uri: backgroundUrl}}
-          style={styles.bgImage}>
+            style={styles.bgImage}
+            imageStyle={styles.bgImageStyle}
+          >
             <View style={styles.cardTop}>
-            {
-              (author && author.photoUrl) ? <View style={styles.avatarContainer}>
+              {!onlyBussness &&
+              <View style={styles.avatarContainer}>
                 <Image source={{uri: author.photoUrl}} style={styles.avatar} />
-              </View> : null
-            }
+              </View>
               }
               {!onlyBussness &&
               <View style={styles.textTopContainer}>
@@ -180,7 +171,7 @@ class HomeCard extends PureComponent {
                   {author.fullName}
                 </Text>
                 <Text reverse small>
-                {place || ' '}
+                  {place}
                 </Text>
               </View>
               }
@@ -195,8 +186,8 @@ class HomeCard extends PureComponent {
                 onPress={() => {}}
                 innerContainerStyle={styles.actionButton}
               >
-              <IconIonicon name='ios-bookmark' color='#AEADB1' size={30} />
-            </Touchable>
+                <IconIonicon name='ios-bookmark' color='#FFFFFF' size={30} />
+              </Touchable>
             </View>
             <View style={styles.lottieContainer}>
               <LottieView style={{...styles.lottieView, transform: transform}}
@@ -220,43 +211,35 @@ class HomeCard extends PureComponent {
                     resizeMode={'stretch'}
                     source={Icons.slider_track}
                   />
-            <View style={styles.leftIconsContainer}>
-              <Touchable innerContainerStyle={styles.comments}>
-                <Entypo
-                  name='heart'
-                  color='#AEADB1'
-                  size={30}
+                  <Slider
+                    style={{width: '100%', height: '100%'}}
+                    value={this.state.sliderValue}
+                    onValueChange={this.onSliderChanged}
+                    thumbImage={Icons.slider_thumb}
+                    thumbStyle={styles.thumb}
+                    maximumTrackTintColor={'transparent'}
+                    minimumTrackTintColor={'transparent'}
+                  />
+                </View>
+
+                <Image
+                  style={styles.icon}
+                  source={Icons.like}
                 />
-                <Text style={styles.countText} reverse>
+
+                <Text style={styles.boldText} reverse>
                   {Math.floor(totalSympathy / 1000)}K
                 </Text>
-              </Touchable>
 
-              <Touchable innerContainerStyle={[styles.comments, styles.leftSpace]}>
-                <EvilIcons
-                  name='comment'
-                  color='#AEADB1'
-                  size={30}
-                />
-                <Text style={styles.countText} reverse>
-                  {totalComments}
-                </Text>
-              </Touchable>
-            </View>
-            <Slider
-              style={styles.slider}
-              value={this.state.sliderValue}
-              onValueChange={sliderValue =>
-                this.setState(() => ({sliderValue}))
-              }
-            />
-            <Touchable innerContainerStyle={styles.comments}>
-              <Feather
-                name='send'
-                color='#AEADB1'
-                size={25}
-              />
-            </Touchable>
+                <Touchable innerContainerStyle={styles.comments}>
+                  <Image
+                    style={styles.icon}
+                    source={Icons.comment}
+                  />
+                  <Text style={styles.boldText} reverse>
+                    {totalComments}
+                  </Text>
+                </Touchable>
                 <Touchable innerContainerStyle={styles.send}>
                   <Image
                     style={styles.icon}
@@ -264,7 +247,9 @@ class HomeCard extends PureComponent {
                   />
                 </Touchable>
               </View>
+            </LinearGradient>
           </ImageBackground>
+        </View>
       </TouchableWithoutFeedback>
     )
   }

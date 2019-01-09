@@ -182,6 +182,10 @@ class MapView extends Component {
     this.__changeCurrentMapPreset({id})
   }
 
+  onBackPress = () => {
+    this.props.onBackHome()
+  }
+
   render () {
     const {mapPresets} = this.state
     const {userLocation, coords, openBusinessSearchModal} = this.props
@@ -205,7 +209,7 @@ class MapView extends Component {
 
         <ContentContainer pointerEvents='box-none'>
           <SearchHeader
-            onBackPress={this.showModal}
+            onBackPress={this.onBackPress}
             onFocus={openBusinessSearchModal}
             coords={coords}
             blurOnFocus

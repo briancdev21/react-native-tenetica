@@ -1,31 +1,25 @@
-import React from 'react'
 import {Easing, Animated} from 'react-native'
 
 import {
-  createStackNavigator,
-  createMaterialTopTabNavigator
+  createStackNavigator
 } from 'react-navigation'
-import BottomTabBar from 'src/components/BottomTabBar'
 import defaultStackNavigatorConfig from 'src/router/config'
+import {PlaceProfile} from '../../containers/PlaceProfile'
 
-import HomeStack from './HomeStack'
-import ExploreStack from './ExploreStack'
-import UserProfileStack from './UserProfileStack'
 import SearchStack from './SearchStack'
 import CameraStack from './CameraStack'
 import fade from '../../utils/fade-transition'
+import ExploreSwiper from './ExploreSwiper'
 
-const BasicNavigationStack = createMaterialTopTabNavigator(
+const BasicNavigationStack = createStackNavigator(
   {
-    Home: HomeStack,
-    UserProfile: UserProfileStack,
-    Explore: ExploreStack
+    Home: ExploreSwiper,
+    BusinessProfile: {screen: PlaceProfile}
   },
   {
     ...defaultStackNavigatorConfig,
     animationEnabled: true,
     swipeEnabled: true,
-    tabBarComponent: props => <BottomTabBar {...props} />,
     tabBarPosition: 'bottom',
     initialRouteName: 'Home'
   }

@@ -15,12 +15,11 @@ export default function NavBarIcon({icon, onPress, active}) {
 }
 
 const Container = styled.View`
-  height : 48px;
   padding-horizontal: 20px;
-  padding-vertical: 12px;
+  padding-bottom: 15px;
 `
 
 const IconContainer = styled.View`
-  width: 20px;
-  opacity: ${props => (props.active ? 1.0 : 1.0)};
+  padding-top: 15px;
+  opacity: ${props => (props.active ? 1.0 : 0.5)};
 `

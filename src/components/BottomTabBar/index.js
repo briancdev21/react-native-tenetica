@@ -1,69 +1,39 @@
 import React, {Component} from 'react'
-import {StyleSheet} from 'react-native'
-import {StackActions, SafeAreaView} from 'react-navigation'
-// import styled from 'styled-components'
+import {StyleSheet, View} from 'react-native'
+import {StackActions} from 'react-navigation'
 
-import ProfileIcon from 'src/components/BottomTabBar/icons/profile_outline.png'
-import ProfileFilledIcon from 'src/components/BottomTabBar/icons/profile_filled.png'
-import HomeIcon from 'src/components/BottomTabBar/icons/home_outline.png'
-import HomeFilledIcon from 'src/components/BottomTabBar/icons/home_filled.png'
-import AddIcon from 'src/components/BottomTabBar/icons/add_outline.png'
-// import AddFilledIcon from 'src/components/BottomTabBar/icons/add_filled.png'
-import ExploreIcon from 'src/components/BottomTabBar/icons/location_outline.png'
-import ExploreFilledIcon from 'src/components/BottomTabBar/icons/location_filled.png'
-import SearchIcon from 'src/components/BottomTabBar/icons/search_outline.png'
-// import SearchFilledIcon from 'src/components/BottomTabBar/icons/search_filled.png'
+import ProfileIcon from 'src/components/BottomTabBar/icons/profile.png'
+import HomeIcon from 'src/components/BottomTabBar/icons/home.png'
+import AddIcon from 'src/components/BottomTabBar/icons/add.png'
+import ExploreIcon from 'src/components/BottomTabBar/icons/explore.png'
+import SearchIcon from 'src/components/BottomTabBar/icons/search.png'
+import ProfileOutlineIcon from 'src/components/BottomTabBar/icons/profile_outline.png'
+import {ifIphoneX} from '../../utils/isIphoneX'
 
 import NavBarIcon from './NavBarIcon'
 
-const navbarIconsArray = [
-  HomeIcon,
-  ProfileIcon,
-  ExploreIcon
-  // ProfileOutlineIcon
-]
-
-const navbarIconsFilledArray = [
-  HomeFilledIcon,
-  ProfileFilledIcon,
-  ExploreFilledIcon
-  // ProfileOutlineIcon
-]
-
-const styles = StyleSheet.create({
-  tabBarBottom: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignContent: 'center',
-    paddingHorizontal: 10,
-    backgroundColor: '#fafafa',
-    borderTopColor: '#b2b2b2',
-    borderTopWidth: 1
-  }
-})
-
 class TabBarBottom extends Component {
   render() {
+    const navBarItem = {
+      UserProfile: this.props.activeTab === 'UserProfile' ? ProfileIcon : ProfileOutlineIcon,
+      Search: SearchIcon,
+      Camera: AddIcon,
+      Home: HomeIcon,
+      Explore: ExploreIcon
+    }
+
     return (
-      <SafeAreaView style={styles.tabBarBottom}>
-        {this.getNavIcons()}
-      </SafeAreaView>
+      <View style={styles.tabBarBottom}>
+        {this.getNavIcons(navBarItem)}
+      </View>
     )
   }
 
-  getIcon = (route, index) => {
-    const {navigation} = this.props
-    const focused = index === navigation.state.index
-    // let newIndex = index
-    // if (index === 0 && !focused) newIndex = 3
-    const props = {
-      key: route.key,
-      icon: focused ? navbarIconsFilledArray[index] : navbarIconsArray[index],
-      active: focused,
-      onPress: () => this._handleTabPress(route.key, index)
-    }
-
-    return <NavBarIcon {...props} />
+  getNavIcons = (navBarItem) => {
+    const navIcons = Object.keys(navBarItem).map((nav, index) => {
+      return this.getIconComponent(nav, navBarItem[nav], () => this.navigateTo(nav))
+    })
+    return navIcons
   }
 
   _handleTabPress = (key, index) => {
@@ -82,35 +52,48 @@ class TabBarBottom extends Component {
 
   navigateTo = routeName => {
     const {navigation} = this.props
-    navigation.navigate(routeName)
+    if (routeName === 'Explore') {
+      this.props.goToExplore()
+    } else if (routeName === 'UserProfile') {
+      this.props.goToUserProfile()
+    } else if (routeName === 'Home') {
+      this.props.goToHome()
+    } else {
+      navigation.navigate(routeName)
+    }
   }
 
-  getIconComponent = (key, icon, onPress) => (
-    <NavBarIcon key={key} icon={icon} onPress={onPress} />
-  )
+  getIconComponent = (key, icon, onPress) => {
+    const focused = key === this.props.activeTab
 
-  getNavIcons = () => {
-    const {
-      navigation: {
-        state: {routes}
-      }
-    } = this.props
-    const navIcons = routes.map(this.getIcon)
-    navIcons.splice(
-      1,
-      0,
-      this.getIconComponent('add', AddIcon, () => this.navigateTo('Camera'))
-    )
-    navIcons.splice(
-      1,
-      0,
-      this.getIconComponent('search', SearchIcon, () =>
-        this.navigateTo('Search')
-      )
-    )
-
-    return navIcons
+    const props = {
+      key,
+      icon,
+      onPress,
+      active: focused
+    }
+    return <NavBarIcon {...props} />
   }
 }
 
 export default TabBarBottom
+
+const styles = StyleSheet.create({
+  tabBarBottom: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+    paddingHorizontal: 10,
+    backgroundColor: '#fafafa',
+    borderTopColor: '#b2b2b2',
+    borderTopWidth: 1,
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    ...ifIphoneX({
+      paddingBottom: 20
+    }, {
+      paddingBottom: 0
+    })
+  }
+})

@@ -5,7 +5,8 @@ import {connect} from 'react-redux'
 import {Bubbles} from 'react-native-loader'
 import Mapbox from '@mapbox/react-native-mapbox-gl'
 import Autocomplete from 'react-native-autocomplete-input'
-import axios from 'axios'
+
+import fetch from 'cross-fetch'
 import api from 'src/api'
 import {log} from 'src/utils/fn'
 
@@ -33,8 +34,8 @@ export class CreateBusiness extends React.PureComponent {
 
   onUpdateAddress = address => {
     this.setState({address})
-    axios('https://api.mapbox.com/geocoding/v5/mapbox.places/' + address + '.json?limit=5&access_token=' + accessToken)
-      .then((response) => response.data)
+    fetch('https://api.mapbox.com/geocoding/v5/mapbox.places/' + address + '.json?limit=5&access_token=' + accessToken)
+      .then((response) => response.json())
       .then((responseJson) => {
         if (!responseJson.features) {
           this.setState({
@@ -69,8 +70,8 @@ export class CreateBusiness extends React.PureComponent {
   setAddressFromCoordinates = () => {
     const {coordinates} = this.state
     if (coordinates) {
-      axios('https://api.mapbox.com/geocoding/v5/mapbox.places/' + coordinates[0] + ',' + coordinates[1] + '.json?access_token=' + accessToken)
-        .then((response) => response.data)
+      fetch('https://api.mapbox.com/geocoding/v5/mapbox.places/' + coordinates[0] + ',' + coordinates[1] + '.json?access_token=' + accessToken)
+        .then((response) => response.json())
         .then((responseJson) => {
           if (responseJson.features.length > 0) {
             this.setState({

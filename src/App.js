@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react'
-import {View, Text, StyleSheet, StatusBar} from 'react-native'
+import {View, Text, StyleSheet} from 'react-native'
 import {ThemeProvider} from 'styled-components'
 import {Provider} from 'react-redux'
-import axios from 'axios'
+import fetch from 'cross-fetch'
 import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
 
@@ -30,21 +30,15 @@ class App extends PureComponent {
 
   render() {
     return (
-      <React.Fragment>
-        <StatusBar
-          backgroundColor='#f0f0f0'
-          barStyle='light-content'
-        />
-        <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <Navigator
-              ref={navigatorRef =>
-                NavigationService.setTopLevelNavigator(navigatorRef)
-              }
-            />
-          </ThemeProvider>
-        </Provider>
-      </React.Fragment>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Navigator
+            ref={navigatorRef =>
+              NavigationService.setTopLevelNavigator(navigatorRef)
+            }
+          />
+        </ThemeProvider>
+      </Provider>
     )
   }
 }
@@ -54,8 +48,9 @@ class AppWrapper extends PureComponent {
 
   async componentDidMount() {
     try {
-      const response = await axios(Config.MANIFEST_SERVER)
-      const {servers} = response.data
+      const response = await fetch(Config.MANIFEST_SERVER)
+
+      const {servers} = await response.json()
       api.setUrl(servers[0].url)
 
       this.setState({loading: false})
@@ -70,10 +65,6 @@ class AppWrapper extends PureComponent {
     if (this.state.error) {
       return (
         <View style={styles.center}>
-          <StatusBar
-            backgroundColor='#f0f0f0'
-            barStyle='light-content'
-          />
           <Text>Error loading server configuration</Text>
         </View>
       )

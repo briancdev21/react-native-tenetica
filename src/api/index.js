@@ -1,10 +1,9 @@
+import fetch from 'cross-fetch'
 import queryString from 'query-string'
 
 import {log} from 'src/utils/fn'
 import {auth} from 'src/utils/auth'
 import NavigationService from 'src/utils/NavigationService'
-
-import axios from 'axios'
 
 class APIProvider {
   constructor () {
@@ -14,22 +13,11 @@ class APIProvider {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     }
-    this.axiosInstance = undefined
-  }
-
-  __configureAxios (configs = {}) {
-    if (!this.axiosInstance && this.url) {
-      this.axiosInstance = axios.create({
-        baseURL: this.url,
-        timeout: 5000,
-        ...configs
-      })
-    }
   }
 
   __makeEndpoint ({route, id, query = {}}) {
     const queryData = queryString.stringify(query)
-    let url = `/${route}`
+    let url = `${this.url}/${route}`
 
     if (id) {
       url += `/${id}`
@@ -42,23 +30,29 @@ class APIProvider {
     return url
   }
 
-  __makeData (data) {
-    if (data) {
-      return JSON.stringify(data)
+  __makeOptions ({method, data}) {
+    const options = {
+      method,
+      headers: this.headers
     }
 
-    return {}
+    if (data) {
+      options.body = JSON.stringify(data)
+    }
+
+    return options
   }
 
   async __makeCall ({route = '', id, method = 'GET', data, query}) {
     const endpoint = this.__makeEndpoint({route, id, query})
+    const options = this.__makeOptions({method, data})
 
     log.group(`__makeCall ${endpoint}`)
+    log.info(options)
 
-    const configs = {url: endpoint, method, baseURL: this.url, data, headers: this.headers}
-    const response = await this.axiosInstance.request(configs)
+    const response = await fetch(endpoint, options)
+    const responseJson = response.json()
 
-    const responseJson = response.data
     log.info({response, json: responseJson})
     log.groupEnd(`__makeCall ${endpoint}`)
 
@@ -86,7 +80,6 @@ class APIProvider {
 
   setUrl (url) {
     this.url = url
-    this.__configureAxios()
   }
 
   async login (credentials) {
