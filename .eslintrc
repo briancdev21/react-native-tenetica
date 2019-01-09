@@ -1,0 +1,65 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "extends": ["standard", "standard-react", "plugin:flowtype/recommended"],
+  "plugins": ["flowtype"],
+  "globals": {
+    "process": true,
+    "module": true,
+    "__DEV__": true,
+    "fetch": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecorators": true
+    }
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
+  },
+  "rules": {
+    "react/prop-types": 0,
+    "space-before-function-paren": 0,
+    "object-curly-spacing": ["error", "never"],
+    "react/sort-comp": [
+      1,
+      {
+        "order": [
+          "type-annotations",
+          "static-methods",
+          "lifecycle",
+          "render",
+          "everything-else"
+        ],
+        "groups": {
+          "lifecycle": [
+            "displayName",
+            "propTypes",
+            "contextTypes",
+            "childContextTypes",
+            "/^.*: Function$/",
+            "mixins",
+            "statics",
+            "defaultProps",
+            "state",
+            "constructor",
+            "getDefaultProps",
+            "getInitialState",
+            "getChildContext",
+            "componentWillMount",
+            "componentDidMount",
+            "componentWillReceiveProps",
+            "shouldComponentUpdate",
+            "componentWillUpdate",
+            "componentDidUpdate",
+            "componentWillUnmount"
+          ]
+        }
+      }
+    ]
+  }
+}
