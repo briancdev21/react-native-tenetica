@@ -6,12 +6,17 @@ import {Bubbles} from 'react-native-loader'
 import Mapbox from '@mapbox/react-native-mapbox-gl'
 import Autocomplete from 'react-native-autocomplete-input'
 
-import fetch from 'cross-fetch'
+import axios from 'axios'
+
 import api from 'src/api'
 import {log} from 'src/utils/fn'
 
 import {geoLocationCoordsSelector} from 'src/components/GeoLocation/selectors'
 import StyledText from 'src/components/StyledText'
+
+const apiInstant = axios.create({
+  timeout: 5000
+})
 
 const mapStateToProps = state => ({
   userLocation: geoLocationCoordsSelector(state)
@@ -34,18 +39,17 @@ export class CreateBusiness extends React.PureComponent {
 
   onUpdateAddress = address => {
     this.setState({address})
-    fetch('https://api.mapbox.com/geocoding/v5/mapbox.places/' + address + '.json?limit=5&access_token=' + accessToken)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        if (!responseJson.features) {
+    apiInstant.get('https://api.mapbox.com/geocoding/v5/mapbox.places/' + address + '.json?limit=5&access_token=' + accessToken)
+      .then((response) => {
+        if (!response.data.features) {
           this.setState({
             searchedAddresses: null
           })
           return
         }
-        if (responseJson.features.length > 0) {
+        if (response.data.features.length > 0) {
           this.setState({
-            searchedAddresses: responseJson.features
+            searchedAddresses: response.data.features
           })
         }
       })
@@ -70,12 +74,11 @@ export class CreateBusiness extends React.PureComponent {
   setAddressFromCoordinates = () => {
     const {coordinates} = this.state
     if (coordinates) {
-      fetch('https://api.mapbox.com/geocoding/v5/mapbox.places/' + coordinates[0] + ',' + coordinates[1] + '.json?access_token=' + accessToken)
-        .then((response) => response.json())
-        .then((responseJson) => {
-          if (responseJson.features.length > 0) {
+      apiInstant.get('https://api.mapbox.com/geocoding/v5/mapbox.places/' + coordinates[0] + ',' + coordinates[1] + '.json?access_token=' + accessToken)
+        .then((response) => {
+          if (response.data.features.length > 0) {
             this.setState({
-              address: responseJson.features[0].place_name
+              address: response.data.features[0].place_name
             })
           }
         })
