@@ -48,31 +48,16 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new SvgPackage(),
-            new LinearGradientPackage(),
-            new RNCameraPackage(),
-            new BlurViewPackage(),
-            new VectorIconsPackage(),
-            new RNTextSizePackage(),
-            new SplashScreenReactPackage(),
-            new RNGestureHandlerPackage(),
-            new ReactNativeConfigPackage(),
-            new RCTMGLPackage(),
-            new VectorIconsPackage(),
-            new RNTextSizePackage(),
-            new SplashScreenReactPackage(),
-            new RNGestureHandlerPackage(),
-            new ReactNativeConfigPackage(),
-            new SplashScreenReactPackage(),
-            new RNGestureHandlerPackage(),
-            new ReactNativeConfigPackage(),
-            new RNTextSizePackage(),
-            new VectorIconsPackage(),
           new SvgPackage(),
-          new BlurViewPackage(),
-          new RCTMGLPackage(),
+          new LinearGradientPackage(),
           new RNCameraPackage(),
-          new LinearGradientPackage()
+          new BlurViewPackage(),
+          new VectorIconsPackage(),
+          new RNTextSizePackage(),
+          new SplashScreenReactPackage(),
+          new RNGestureHandlerPackage(),
+          new ReactNativeConfigPackage(),
+          new RCTMGLPackage()
       );
     }
 

@@ -176,7 +176,7 @@ dependencies {
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-svg')
     implementation project(':react-native-blur')
-    implementation (project(':mapbox-react-native-mapbox-gl')) {
+    implementation (project(':@mapbox_react-native-mapbox-gl')) {
         implementation ('com.squareup.okhttp3:okhttp:3.6.0') {
             force = true
         }
