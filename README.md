@@ -1,36 +1,5 @@
 # APP MVP
 
-#### How to contribute
-
-- We use a simple version of git-flow where every new feature or bugfix goes through a pull request to master branch.
-- Which means your feature/bugfix branch should have meaningful naming.
-- Each PR should start with a word: `feature`, `fix`, `chore`, `doc`.
-- Admin to cross check PR and approve to merge.
-- You merge it with squash action to have a clear master history.
-
-Please have only one ticket in `In Progress` column of the Trello.
-
-#### How setup environment
-
-Make sure that you could reach the server by `curl` from your region.
-
-```
-curl 'http://162.246.23.230/api/v1/manifest' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) ReactNativeDebugger/0.8.2 Chrome/58.0.3029.110 Electron/1.7.15 Safari/537.36' --compressed
-```
-
-If yes then all right. If not then the IP may be blocked in your country, or the above IP is outdated (see source files for latest IP):
-
-1. Registrate a new account in [vultr](https://www.vultr.com/).
-2. Deploy a new server in
-   1. Server Location = `Frankfurt`,
-   2. Server Type `Application` = `OpenVpn`.
-   3. Server Size = \$5/month
-3. Connect to the server with provided credentials.
-4. Download .ovpn file.
-5. Install `Tunnelblick` for MacOS and drop this config there.
-6. Install `OpenVpn for android` app from Google Play and drop this config there.
-7. Install `OpenVpn` app for App Store and drop config by Air Drop to your iPhone.
-8. That's it.
 
 #### How to run the project
 
@@ -38,10 +7,16 @@ If yes then all right. If not then the IP may be blocked in your country, or the
 yarn install
 ```
 
+#### How to run on iOS simulator
 ```
+react-native link
+cd ios && pod install
+cd ..
 react-native run-ios
 ```
+If you have `CFBundleIdentifier error`, please delete ios/build folder and run `react-native run-ios` again.
 
+#### How to run on Android
 ```
 react-native run-android
 ```
