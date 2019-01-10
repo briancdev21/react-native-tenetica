@@ -17,36 +17,51 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.17</string>
+	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>8</string>
+	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>purpose for using calendar</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>purpose for using calendar</string>
-	<key>NSCalendarsUsageDescription</key>
-	<string>purpose for using calendar</string>
-	<key>NSCameraUsageDescription</key>
-	<string>AppCompany needs permission to access your camera in order to take photos.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>AppCompany needs permission to access your location.</string>
-	<key>NSMotionUsageDescription</key>
-	<string>purpose for using calendar</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>AppCompany needs permission to access your photo library in order to view photos.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>purpose for using calendar</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Mark Simonson - Proxima Nova Alt Black-webfont.ttf</string>
+		<string>Mark Simonson - Proxima Nova Alt Bold-webfont.ttf</string>
+		<string>Mark Simonson - Proxima Nova Alt Condensed Semibold-webfont.ttf</string>
+		<string>Mark Simonson - Proxima Nova Alt Regular-webfont.ttf</string>
+		<string>Mark Simonson - Proxima Nova ScOsf Thin-webfont.ttf</string>
+		<string>Mark Simonson - Proxima Nova Semibold-webfont.ttf</string>
+		<string>Mark Simonson - Proxima Nova Thin-webfont.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
@@ -62,25 +77,6 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
-		<string>Mark Simonson - Proxima Nova Alt Black-webfont.ttf</string>
-		<string>Mark Simonson - Proxima Nova Alt Bold-webfont.ttf</string>
-		<string>Mark Simonson - Proxima Nova Alt Condensed Semibold-webfont.ttf</string>
-		<string>Mark Simonson - Proxima Nova Alt Regular-webfont.ttf</string>
-		<string>Mark Simonson - Proxima Nova ScOsf Thin-webfont.ttf</string>
-		<string>Mark Simonson - Proxima Nova Semibold-webfont.ttf</string>
-		<string>Mark Simonson - Proxima Nova Thin-webfont.ttf</string>
 	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 </dict>
 </plist>
