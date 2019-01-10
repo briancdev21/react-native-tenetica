@@ -76,8 +76,8 @@ class SearchHeader extends React.Component {
   }
 
   onBackPress = () => {
-    const {navigation, onBackPress} = this.props
-
+    const {navigation, onBackPress, updateSearchValue} = this.props
+    updateSearchValue('')
     if (onBackPress) {
       return onBackPress()
     }

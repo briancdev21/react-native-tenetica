@@ -214,6 +214,7 @@ class MapView extends Component {
             coords={coords}
             blurOnFocus
             withBlur
+            isFocused={this.props.isFocused}
             withBack
             editable={false}
           />
