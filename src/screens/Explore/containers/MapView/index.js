@@ -276,7 +276,7 @@ class MapView extends Component {
               )}
               onSnapToItem={this.__onCarouselItemChanged}
               sliderWidth={width}
-              itemWidth={width * 0.75}
+              itemWidth={width * 0.7}
               firstItem={0}
               inactiveSlideScale={1}
               activeSlideAlignment='center'
@@ -309,7 +309,7 @@ const ContentContainer = styled.View`
 const CarouselContainer = styled.View`
   position: absolute;
   padding-horizontal: 0;
-  bottom: 67px;
+  bottom: 80px;
 `
 
 export default MapView
