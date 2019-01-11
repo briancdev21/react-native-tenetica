@@ -175,6 +175,7 @@ class MapView extends Component {
     <Mapbox.PointAnnotation
       coordinate={[lng, lat]}
       title={'user location'}
+      id='user_location_annotation'
     >
       <UserLocationAnnotation onPress={() => {}} />
     </Mapbox.PointAnnotation>
@@ -199,7 +200,7 @@ class MapView extends Component {
     const {mapPresets} = this.state
     const {userLocation, coords, openBusinessSearchModal} = this.props
     const {lat, lng} = userLocation // starting to show map from user location
-
+    console.log('user location: ', lat, lng)
     return (
       <Container>
         <MapboxContainer
