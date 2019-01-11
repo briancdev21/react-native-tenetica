@@ -112,7 +112,7 @@ class SearchHeader extends React.Component {
         <Container withBlur={withBlur} inversed={inversed} style={containerStyle}>
           <NavButtonsContainer>
             {withBack && (
-              <BackButton isWhite={!inversed} onPress={this.onBackPress} containerStyle={{padding: 10}} />
+              <BackButton isWhite={false} onPress={this.onBackPress} containerStyle={styles.backButtonStyle} />
             )}
             {editable ? <SearchBarContainer>
               <TextInput
@@ -133,8 +133,8 @@ class SearchHeader extends React.Component {
             </SearchBarContainer> : <SearchBarButton
               onPress={onFocus}
             >
-              <DisabledTextInput style={styles.shadow}>
-                <Image style={{width: 18, height: 18}} source={SearchIcon} />
+              <DisabledTextInput style={styles.disabledTextContainer}>
+                <Image style={{width: 19, height: 19}} source={SearchIcon} />
                 &nbsp;&nbsp;Search...
               </DisabledTextInput>
             </SearchBarButton>
@@ -147,7 +147,25 @@ class SearchHeader extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  shadow: {
+  backButtonStyle: {
+    height: 35,
+    width: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 18,
+    marginHorizontal: 15,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.51,
+    shadowRadius: 13.16,
+    elevation: 20
+  },
+  disabledTextContainer: {
+    borderRadius: 1,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -197,12 +215,12 @@ const SearchBarButton = styled.TouchableWithoutFeedback`
 `
 
 const DisabledTextInput = styled.Text`
-  height: 44px;
   flex: 1;
   background-color: #fff;
-  padding-vertical: 10px;
+  padding-vertical: 14px;
   padding-horizontal: 15px;
-  font-size: 17px;
+  margin-right: 5px;
+  font-size: 18px;
   font-weight: 300;
   font-family: ${theme.fonts.ProximaNova};
   color: #202020;
