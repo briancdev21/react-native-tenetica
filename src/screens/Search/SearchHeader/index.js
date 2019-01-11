@@ -108,7 +108,7 @@ class SearchHeader extends React.Component {
           />
         )}
         <Container withBlur={withBlur} inversed={inversed} style={containerStyle}>
-          <NavButtonsContainer>
+          <NavButtonsContainer marginTop={isIos ? '20px' : '0px'}>
             {withBack && (
               <BackButton isWhite={!inversed} onPress={this.onBackPress} containerStyle={{padding: 10}} />
             )}
@@ -163,7 +163,7 @@ const NavButtonsContainer = styled(SafeAreaView)`
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 20px;
+  margin-top: ${props => props.marginTop};
 `
 
 const SearchBarContainer = styled.View`
