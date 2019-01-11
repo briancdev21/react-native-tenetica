@@ -125,7 +125,7 @@ export default class BusinessSearch extends Component {
   }
 
   render () {
-    const {businesses} = this.props
+    const {businesses, searchValue} = this.props
 
     return (
       <Container>
@@ -137,7 +137,7 @@ export default class BusinessSearch extends Component {
 
         <FlatList
           contentContainerStyle={{paddingHorizontal: 15, borderTopColor: '#E9EAEF', borderTopWidth: 2}}
-          data={businesses}
+          data={searchValue === '' ? [] : businesses}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderBusinessCard}
           ListHeaderComponent={this.renderListHeader}

@@ -35,6 +35,7 @@ export default class Explore extends Component {
           openBusinessSearchModal={this.onOpenBusinessSearch}
           openBusinessProfile={this.onOpenPlaceProfileModal}
           onBackHome={this.props.onBackHome}
+          isFocused={this.props.isFocused}
         />
 
         <DiscoverView

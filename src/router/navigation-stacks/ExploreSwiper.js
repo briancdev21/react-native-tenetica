@@ -23,7 +23,7 @@ class ExploreSwiper extends React.Component {
       case 'HOME_PROFILE':
         return <HomeSwiper index={this.state.index} goToExplore={() => this._handleIndexChange(1)} handleIndexChange={this._handleIndexChange} {...this.props} />
       case 'EXPLORE':
-        return <ExploreScreen onBackHome={() => this._handleIndexChange(0)} {...this.props} />
+        return <ExploreScreen onBackHome={() => this._handleIndexChange(0)} {...this.props} isFocused />
       default:
         return null
     }
