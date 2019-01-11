@@ -2,9 +2,9 @@ import React, {PureComponent} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import {ThemeProvider} from 'styled-components'
 import {Provider} from 'react-redux'
-import fetch from 'cross-fetch'
 import Config from 'react-native-config'
 import SplashScreen from 'react-native-splash-screen'
+import axios from 'axios'
 
 import {AppLoading} from 'src/components/AppLoading'
 import configureStore from 'src/store/configure'
@@ -48,10 +48,10 @@ class AppWrapper extends PureComponent {
 
   async componentDidMount() {
     try {
-      const response = await fetch(Config.MANIFEST_SERVER)
+      const response = await axios.get(Config.MANIFEST_SERVER)
 
-      const {servers} = await response.json()
-      api.setUrl(servers[0].url)
+      const server = response.data.servers[0]
+      api.setUrl(server.url)
 
       this.setState({loading: false})
     } catch (error) {
