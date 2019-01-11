@@ -15,7 +15,7 @@ import SliderEntry from 'src/components/SliderEntry'
 import {log} from 'src/utils/fn'
 import {geoLocationCoordsSelector} from 'src/components/GeoLocation/selectors'
 
-import Annotation from './components/Annotation'
+import Annotation, {UserLocationAnnotation} from './components/Annotation'
 import TargetActionButton from './components/TargetActionButton'
 
 import SearchHeader from 'src/screens/Search/SearchHeader'
@@ -171,6 +171,15 @@ class MapView extends Component {
     })
   }
 
+  renderUserLocationAnnotation = (lng, lat) => (
+    <Mapbox.PointAnnotation
+      coordinate={[lng, lat]}
+      title={'user location'}
+    >
+      <UserLocationAnnotation onPress={() => {}} />
+    </Mapbox.PointAnnotation>
+  )
+
   __changeCurrentMapPreset = ({id}) => {
     this.setState({currentMapPresetId: id}, this.__fetchPlaces)
   }
@@ -198,13 +207,14 @@ class MapView extends Component {
           styleURL={Mapbox.StyleURL.Street}
           zoomLevel={16}
           centerCoordinate={[lng, lat]} // mapbox don't need current coords unlike airbnb maps
-          showUserLocation
+          showUserLocation={false}
           logoEnabled={false}
           compassEnabled
           pitchEnabled={false}
           onRegionDidChange={this.__onRegionDidChange}
         >
           {this.renderAnnotations()}
+          {this.renderUserLocationAnnotation(lng, lat)}
         </MapboxContainer>
 
         <ContentContainer pointerEvents='box-none'>
