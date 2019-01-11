@@ -9,21 +9,23 @@ import ExploreIcon from 'src/components/BottomTabBar/icons/explore.png'
 import SearchIcon from 'src/components/BottomTabBar/icons/search.png'
 import ProfileOutlineIcon from 'src/components/BottomTabBar/icons/profile_outline.png'
 import {ifIphoneX} from '../../utils/isIphoneX'
+import LinearGradient from 'react-native-linear-gradient'
 
 import NavBarIcon from './NavBarIcon'
 
 class TabBarBottom extends Component {
   render() {
     const navBarItem = {
-      UserProfile: this.props.activeTab === 'UserProfile' ? ProfileIcon : ProfileOutlineIcon,
+      Home: HomeIcon,
       Search: SearchIcon,
       Camera: AddIcon,
-      Home: HomeIcon,
+      UserProfile: this.props.activeTab === 'UserProfile' ? ProfileIcon : ProfileOutlineIcon,
       Explore: ExploreIcon
     }
 
     return (
       <View style={styles.tabBarBottom}>
+        <LinearGradient colors={['#F4F4F4', '#E7E7E7', '#BABAB8']} style={styles.linearGradient} />
         {this.getNavIcons(navBarItem)}
       </View>
     )
@@ -83,10 +85,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignContent: 'center',
-    paddingHorizontal: 10,
+
     backgroundColor: '#fafafa',
     borderTopColor: '#b2b2b2',
-    borderTopWidth: 1,
     position: 'absolute',
     bottom: 0,
     width: '100%',
@@ -95,5 +96,12 @@ const styles = StyleSheet.create({
     }, {
       paddingBottom: 0
     })
+  },
+  linearGradient: {
+    flex: 1,
+    height: 2,
+    width: '100%',
+    top: 0,
+    position: 'absolute'
   }
 })
