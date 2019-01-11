@@ -40,7 +40,7 @@ const RootStack = createStackNavigator(
         backgroundColor: '#FFF'
       },
       transitionSpec: {
-        duration: 550,
+        duration: 150,
         easing: Easing.out(Easing.poly(4)),
         timing: Animated.timing,
         useNativeDriver: true
