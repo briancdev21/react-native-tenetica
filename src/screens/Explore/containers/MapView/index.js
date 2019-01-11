@@ -66,6 +66,36 @@ class MapView extends Component {
   state = {
     mapCoords: null,
     mapPresets: [],
+    mapPresetsTemp: [
+      {
+        id: undefined,
+        title: 'Bars & Clubs',
+        subtitle: 'Open Now',
+        distance: '2.1mi away',
+        imageUrl: 'https://homepages.cae.wisc.edu/~ece533/images/watch.png'
+      },
+      {
+        id: undefined,
+        title: 'Bars & Clubs',
+        subtitle: 'Open Now',
+        distance: '2.1mi away',
+        imageUrl: 'https://homepages.cae.wisc.edu/~ece533/images/watch.png'
+      },
+      {
+        id: undefined,
+        title: 'Bars & Clubs',
+        subtitle: 'Open Now',
+        distance: '2.1mi away',
+        imageUrl: 'https://homepages.cae.wisc.edu/~ece533/images/watch.png'
+      },
+      {
+        id: undefined,
+        title: 'Bars & Clubs',
+        subtitle: 'Open Now',
+        distance: '2.1mi away',
+        imageUrl: 'https://homepages.cae.wisc.edu/~ece533/images/watch.png'
+      }
+    ],
     currentMapPresetId: null,
     places: [],
     currentIndex: 0
@@ -186,7 +216,8 @@ class MapView extends Component {
   }
 
   __onCarouselItemChanged = (slideIndex) => {
-    const {id} = this.state.mapPresets[slideIndex]
+    // const {id} = this.state.mapPresets[slideIndex]
+    const {id} = this.state.mapPresetsTemp[slideIndex]
     this.setState({currentIndex: slideIndex})
 
     this.__changeCurrentMapPreset({id})
@@ -197,14 +228,15 @@ class MapView extends Component {
   }
 
   render () {
-    const {mapPresets} = this.state
+    // const {mapPresets} = this.state
+    const {mapPresetsTemp} = this.state
     const {userLocation, coords, openBusinessSearchModal} = this.props
     const {lat, lng} = userLocation // starting to show map from user location
-    console.log('user location: ', lat, lng)
     return (
       <Container>
         <MapboxContainer
           ref={this.mapRef}
+          key='mapbox'
           styleURL={Mapbox.StyleURL.Street}
           zoomLevel={16}
           centerCoordinate={[lng, lat]} // mapbox don't need current coords unlike airbnb maps
@@ -233,20 +265,21 @@ class MapView extends Component {
           <TargetActionButton onPress={this.__resetLocation} />
           <CarouselContainer>
             <Carousel
-              data={mapPresets}
+              data={mapPresetsTemp}
               renderItem={({item, index}) => (
                 <SliderEntry
                   data={item}
+                  key={index}
                   active={index === this.state.currentIndex}
                   onPress={this.__changeCurrentMapPreset}
                 />
               )}
               onSnapToItem={this.__onCarouselItemChanged}
               sliderWidth={width}
-              itemWidth={width * 0.9}
+              itemWidth={width * 0.75}
               firstItem={0}
               inactiveSlideScale={1}
-              activeSlideAlignment='start'
+              activeSlideAlignment='center'
               inactiveSlideOpacity={1}
             />
           </CarouselContainer>
@@ -275,7 +308,7 @@ const ContentContainer = styled.View`
 
 const CarouselContainer = styled.View`
   position: absolute;
-  padding-horizontal: 15;
+  padding-horizontal: 0;
   bottom: 67px;
 `
 
