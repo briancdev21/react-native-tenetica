@@ -1,13 +1,9 @@
+import fetch from 'cross-fetch'
 import queryString from 'query-string'
-import axios from 'axios'
 
 import {log} from 'src/utils/fn'
 import {auth} from 'src/utils/auth'
 import NavigationService from 'src/utils/NavigationService'
-
-const api = axios.create({
-  timeout: 5000
-})
 
 class APIProvider {
   constructor () {
@@ -54,13 +50,10 @@ class APIProvider {
     log.group(`__makeCall ${endpoint}`)
     log.info(options)
 
-    const response = await api.request({
-      url: endpoint,
-      method: options.method,
-      headers: options.headers
-    })
+    const response = await fetch(endpoint, options)
+    const responseJson = response.json()
 
-    log.info({response, json: response.data})
+    log.info({response, json: responseJson})
     log.groupEnd(`__makeCall ${endpoint}`)
 
     if (response.status >= 400) {
@@ -70,9 +63,11 @@ class APIProvider {
         NavigationService.navigate('Auth')
         return {}
       }
+
+      throw await responseJson
     }
 
-    return response.data
+    return responseJson
   }
 
   setToken (token) {
