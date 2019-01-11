@@ -3,7 +3,9 @@ import {BlurView} from 'react-native-blur'
 import {
   Platform,
   View,
-  SafeAreaView
+  Image,
+  SafeAreaView,
+  StyleSheet
 } from 'react-native'
 import {connect} from 'react-redux'
 import {withNavigation, NavigationActions} from 'react-navigation'
@@ -14,7 +16,7 @@ import {businessSearchValueSelector, businessSearchLoadingStatusSelector} from '
 
 import BackButton from 'src/components/Buttons/BackButton'
 import TextInput from 'src/components/inputs/TextInput'
-
+import SearchIcon from './icons/search.png'
 import {
   updateSearchValue
 } from '../actions'
@@ -131,8 +133,9 @@ class SearchHeader extends React.Component {
             </SearchBarContainer> : <SearchBarButton
               onPress={onFocus}
             >
-              <DisabledTextInput>
-                Search
+              <DisabledTextInput style={styles.shadow}>
+                <Image style={{width: 18, height: 18}} source={SearchIcon} />
+                &nbsp;&nbsp;Search...
               </DisabledTextInput>
             </SearchBarButton>
             }
@@ -142,6 +145,19 @@ class SearchHeader extends React.Component {
     )
   }
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10
+    },
+    shadowOpacity: 0.51,
+    shadowRadius: 13.16,
+    elevation: 20
+  }
+})
 
 const BlurViewContainer = styled(BlurView)`
   position: absolute;
@@ -155,7 +171,7 @@ const Container = styled.View`
   flex-direction: column;
   justify-content: space-between;
   padding: 15px 15px 15px 0;
-  background-color: ${props => props.withBlur ? 'rgba(22, 24, 35, 0.35)' : 'transparent'};
+  background-color: transparent;
 `
 
 const NavButtonsContainer = styled(SafeAreaView)`
@@ -183,15 +199,13 @@ const SearchBarButton = styled.TouchableWithoutFeedback`
 const DisabledTextInput = styled.Text`
   height: 44px;
   flex: 1;
-  background-color: ${props =>
-    !props.inversed ? 'rgba(255, 255, 255, 0.25)' : '#F2F2F2'};
-  border-radius: 20px;
+  background-color: #fff;
   padding-vertical: 10px;
-  padding-horizontal: 20px;
+  padding-horizontal: 15px;
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 300;
   font-family: ${theme.fonts.ProximaNova};
-  color: 'rgba(255, 255, 255, 0.6)';
+  color: #202020;
 `
 
 const Loader = styled.ActivityIndicator`
