@@ -309,7 +309,7 @@ const ContentContainer = styled.View`
 const CarouselContainer = styled.View`
   position: absolute;
   padding-horizontal: 0;
-  bottom: 80px;
+  bottom: 85px;
 `
 
 export default MapView
