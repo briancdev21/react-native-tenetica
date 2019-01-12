@@ -111,7 +111,7 @@ export default class PullUpContainer extends Component {
   }
 }
 
-const MARGIN_TOP = 46
+const MARGIN_TOP = 40
 const DEVICE_HEIGHT = Dimensions.get('window').height - MARGIN_TOP
 const SWIPE_HEIGHT = 72
 
@@ -120,9 +120,7 @@ const Container = styled.View`
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(75, 76, 81, 1);
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  background-color: #fff;
   margin-top: ${MARGIN_TOP};
   height: ${SWIPE_HEIGHT};
 `
