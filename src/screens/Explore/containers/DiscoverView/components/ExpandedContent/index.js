@@ -23,4 +23,5 @@ export default function DiscoverExpandedContent ({coords, openBusinessSearchModa
 
 const ContentContainer = styled.View`
   flex: 1;
+  background-color: #fff;
 `

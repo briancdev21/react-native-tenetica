@@ -18,11 +18,12 @@ export default function BottomDrawer ({onClose}) {
   )
 }
 
-const TitleContainer = styled.TouchableOpacity`
+const TitleContainer = styled.View`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
   font-size: 18px;
   padding: 15px 30px;
-  color: #000;
+  background-color: #fff;
+  height: 72px;
 `

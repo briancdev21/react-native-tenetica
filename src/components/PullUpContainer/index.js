@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
 import {
+  Platform,
   PanResponder,
   Dimensions,
   LayoutAnimation,
   View
 } from 'react-native'
 import styled from 'styled-components'
+
+const isIOS = Platform.os === 'ios'
 
 export default class PullUpContainer extends Component {
   constructor (props) {
@@ -100,7 +103,7 @@ export default class PullUpContainer extends Component {
   }
 
   showCollapsed = () => {
-    this.customStyle.style.top = DEVICE_HEIGHT - SWIPE_HEIGHT
+    this.customStyle.style.top = isIOS ? DEVICE_HEIGHT - SWIPE_HEIGHT : DEVICE_HEIGHT - SWIPE_HEIGHT - 20
     this.customStyle.style.height = SWIPE_HEIGHT
 
     this.updateNativeProps()
@@ -123,6 +126,7 @@ const Container = styled.View`
   background-color: #fff;
   margin-top: ${MARGIN_TOP};
   height: ${SWIPE_HEIGHT};
+  z-index: 999;
 `
 
 const PanContainer = styled.View`
@@ -131,4 +135,5 @@ const PanContainer = styled.View`
   right: 0;
   top: 0;
   bottom: 0;
+  background-color: rgba(0, 0, 0, 0.01);
 `
