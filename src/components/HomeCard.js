@@ -23,7 +23,8 @@ import autobind from 'autobind-decorator'
 const PADDING = 15
 const LOTTIE_LOOPS = 8
 const LOTTIE_TIME = 11 * 1000
-const LOTTIE_STEP = 1 / LOTTIE_LOOPS
+const LOTTIE_STEP = 1 // LOTTIE_LOOPS
+const MAX_SCALE = 10 // 10%
 
 const styles = StyleSheet.create({
   bgImageContainer: {
@@ -272,7 +273,8 @@ class HomeCard extends PureComponent {
   }
 
   calculateScaleFromSlider(value) {
-    return 1 + 0.2 * Math.abs(value - 0.5)
+    // max scale of emojis
+    return 1 + Math.abs(value - 0.5) * MAX_SCALE / 50
   }
 
   @autobind
