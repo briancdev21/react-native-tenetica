@@ -243,6 +243,7 @@ class MapView extends Component {
           showUserLocation={false}
           logoEnabled={false}
           compassEnabled
+          pitch={0}
           pitchEnabled={false}
           onRegionDidChange={this.__onRegionDidChange}
         >
