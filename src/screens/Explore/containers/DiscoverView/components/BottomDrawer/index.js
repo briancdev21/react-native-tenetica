@@ -1,40 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
-
-import DiscoverIcon from '../DiscoverIcon'
-import SwipeIcon from '../SwipeIcon'
+import AntDesignIcon from 'react-native-vector-icons/AntDesign'
+import {TouchableOpacity} from 'react-native'
 
 import StyledText from 'src/components/StyledText'
 
-export default function BottomDrawer () {
+export default function BottomDrawer ({onClose}) {
   return (
     <>
-      <SwipeIconContainer>
-        <SwipeIcon />
-      </SwipeIconContainer>
       <TitleContainer>
-        <DiscoverIcon />
-        <Title>Discover</Title>
+        <StyledText style={{fontWeight: '500', fontSize: 18}}>Near me...</StyledText>
+        <TouchableOpacity onPress={onClose}>
+          <AntDesignIcon name='plus' size={18} color='#000' />
+        </TouchableOpacity>
       </TitleContainer>
     </>
   )
 }
 
-const SwipeIconContainer = styled.View`
-  margin: 6px 0 14px;
-  align-self: center;
-`
-
 const TitleContainer = styled.View`
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: row;
-`
-
-const Title = styled(StyledText)`
-  align-self: center;
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: -0.41px;
-  color: #FFF;
+  font-size: 18px;
+  padding: 15px 30px;
+  background-color: #fff;
+  height: 72px;
 `

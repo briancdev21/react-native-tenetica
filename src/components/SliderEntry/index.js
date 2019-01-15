@@ -1,12 +1,9 @@
 import React, {Component} from 'react'
-import {Image} from 'react-native'
+import {Image, StyleSheet} from 'react-native'
 import PropTypes from 'prop-types'
-import LinearGradient from 'react-native-linear-gradient'
 import styled from 'styled-components'
 
 import StyledText from 'src/components/StyledText'
-
-import FakeSlideImage from './image.png'
 
 export default class SliderEntry extends Component {
   static propTypes = {
@@ -22,21 +19,26 @@ export default class SliderEntry extends Component {
   }
 
   render () {
-    const {data: {name}, active} = this.props
+    const {data: {title, subtitle, imageUrl}, active} = this.props
 
     return (
-      <SlideContainer onPress={this.onPress}>
+      <SlideContainer
+        style={styles.shadow}
+        onPress={this.onPress}
+      >
         <Container
-          colors={active ? BLUE_GRADIENT : GRAY_GRADIENT}
-          style={{shadowOffset: {height: 20}}}
+          active={active}
         >
-          <ImageContainer>
-            <Image style={{borderRadius: 12, overflow: 'hidden'}} source={FakeSlideImage} />
+          <ImageContainer style={styles.shadow}>
+            <Image style={{overflow: 'hidden', width: 70, height: 85}} source={{uri: imageUrl}} />
           </ImageContainer>
           <TextContainer>
-            <Text>
-              {name}
-            </Text>
+            <TitleText>
+              {title}
+            </TitleText>
+            <SubTitleText>
+              {subtitle}
+            </SubTitleText>
           </TextContainer>
         </Container>
       </SlideContainer>
@@ -50,51 +52,53 @@ export default class SliderEntry extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 5,
+      height: 5
+    },
+    shadowOpacity: 0.38,
+    shadowRadius: 6.27,
+    elevation: 10
+  }
+})
+
 const SlideContainer = styled.TouchableOpacity.attrs({
   activeOpacity: 1
 })`
-  padding-left: 15px;
+  padding-horizontal: 15px;
 `
 
-const BLUE_GRADIENT = ['#00B6EA', '#22CEE7']
-const GRAY_GRADIENT = ['rgba(22, 24, 35, 0.85)', 'rgba(22, 24, 35, 0.85)']
-
-const Container = styled(LinearGradient).attrs({
-  start: {x: 0, y: 0},
-  end: {x: 1, y: 0}
-})`
+const Container = styled.View`
   flex-direction: row;
   justify-content: center;
   align-content: center;
-  height: 100px;
-  border-color: #fff;
-  border-radius: 16px;
-  padding: 5px;
-  shadowColor: 'rgba(22, 24, 35, 0.2)';
-  shadowOpacity: ${props => props.isGridView ? 0 : 1.0}; 
-  shadowRadius: 40;
+  height: 85px;
+  background-color: #fff;
+  opacity: ${props => props.active ? 1 : 0.9};
 `
 
 const TextContainer = styled.View`
   flex: 1;
-  padding-left: 15px;
-  padding-right: 5px;
+  padding-horizontal: 12px;
   align-self: center;
 `
 
-const Text = styled(StyledText).attrs({
-  numberOfLines: 3
-})`
-  font-size: 17px;
-  letter-spacing: -0.15px;
-  font-weight: 700;
-  margin: 10px;
-  color: #ffffff;
+const TitleText = styled(StyledText)`
+  font-size: 18px;
+  letter-spacing: -0.21px;
+  font-weight: 500;
+  color: #000;
+`
+const SubTitleText = styled(TitleText)`
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.5);
 `
 
 const ImageContainer = styled.View`
-  width: 88px;
-  height: 88px;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 `

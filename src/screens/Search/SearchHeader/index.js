@@ -1,9 +1,10 @@
 import React from 'react'
-import {BlurView} from 'react-native-blur'
 import {
   Platform,
   View,
-  SafeAreaView
+  Image,
+  SafeAreaView,
+  StyleSheet
 } from 'react-native'
 import {connect} from 'react-redux'
 import {withNavigation, NavigationActions} from 'react-navigation'
@@ -14,7 +15,7 @@ import {businessSearchValueSelector, businessSearchLoadingStatusSelector} from '
 
 import BackButton from 'src/components/Buttons/BackButton'
 import TextInput from 'src/components/inputs/TextInput'
-
+import SearchIcon from './icons/search.png'
 import {
   updateSearchValue
 } from '../actions'
@@ -69,22 +70,6 @@ class SearchHeader extends React.Component {
   //   return false
   // }
 
-  onSearchTextChange = (newValue) => {
-    const {updateSearchValue} = this.props
-
-    updateSearchValue(newValue)
-  }
-
-  onBackPress = () => {
-    const {navigation, onBackPress, updateSearchValue} = this.props
-    updateSearchValue('')
-    if (onBackPress) {
-      return onBackPress()
-    }
-
-    navigation.dispatch(NavigationActions.back())
-  }
-
   render () {
     const {
       withBack,
@@ -101,16 +86,10 @@ class SearchHeader extends React.Component {
 
     return (
       <View>
-        {withBlur && isIos && (
-          <BlurViewContainer
-            blurAmount={5}
-            blurType='light'
-          />
-        )}
         <Container withBlur={withBlur} inversed={inversed} style={containerStyle}>
           <NavButtonsContainer>
             {withBack && (
-              <BackButton isWhite={!inversed} onPress={this.onBackPress} containerStyle={{padding: 10}} />
+              <BackButton isWhite={false} onPress={this.onBackPress} containerStyle={styles.backButtonStyle} />
             )}
             {editable ? <SearchBarContainer>
               <TextInput
@@ -128,12 +107,11 @@ class SearchHeader extends React.Component {
 
               {searching && <Loader />}
 
-            </SearchBarContainer> : <SearchBarButton
-              onPress={onFocus}
-            >
-              <DisabledTextInput>
-                Search
-              </DisabledTextInput>
+            </SearchBarContainer> : <SearchBarButton onPress={onFocus}>
+              <View style={styles.disabledTextContainer}>
+                <Image style={{width: 19, height: 19, position: 'relative'}} source={SearchIcon} />
+                <DisabledTextInput editable={false} selectTextOnFocus={false}>&nbsp;&nbsp;Search...</DisabledTextInput>
+              </View>
             </SearchBarButton>
             }
           </NavButtonsContainer>
@@ -141,21 +119,65 @@ class SearchHeader extends React.Component {
       </View>
     )
   }
+
+  onSearchTextChange = (newValue) => {
+    const {updateSearchValue} = this.props
+    updateSearchValue(newValue)
+  }
+
+  onBackPress = () => {
+    const {navigation, onBackPress, updateSearchValue} = this.props
+    updateSearchValue('')
+    if (onBackPress) {
+      return onBackPress()
+    }
+    navigation.dispatch(NavigationActions.back())
+  }
 }
 
-const BlurViewContainer = styled(BlurView)`
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
-`
+const styles = StyleSheet.create({
+  backButtonStyle: {
+    height: 36,
+    width: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 18,
+    marginHorizontal: 15,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.38,
+    shadowRadius: 13.16,
+    elevation: 15
+  },
+  disabledTextContainer: {
+    borderRadius: 1,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 14,
+    paddingHorizontal: 15,
+    marginRight: 5,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10
+    },
+    shadowOpacity: 0.38,
+    shadowRadius: 13.16,
+    elevation: 15
+  }
+})
 
 const Container = styled.View`
   flex-direction: column;
   justify-content: space-between;
   padding: 15px 15px 15px 0;
-  background-color: ${props => props.withBlur ? 'rgba(22, 24, 35, 0.35)' : 'transparent'};
+  background-color: transparent;
 `
 
 const NavButtonsContainer = styled(SafeAreaView)`
@@ -180,18 +202,12 @@ const SearchBarButton = styled.TouchableWithoutFeedback`
   position: relative
 `
 
-const DisabledTextInput = styled.Text`
-  height: 44px;
-  flex: 1;
-  background-color: ${props =>
-    !props.inversed ? 'rgba(255, 255, 255, 0.25)' : '#F2F2F2'};
-  border-radius: 20px;
-  padding-vertical: 10px;
-  padding-horizontal: 20px;
-  font-size: 17px;
-  font-weight: 700;
+const DisabledTextInput = styled.TextInput`
+  font-size: 18px;
+  padding: 0;
+  font-weight: ${isIos ? 500 : 300};
   font-family: ${theme.fonts.ProximaNova};
-  color: 'rgba(255, 255, 255, 0.6)';
+  color: #202020;
 `
 
 const Loader = styled.ActivityIndicator`
